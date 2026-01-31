@@ -56,6 +56,7 @@ contract PokerLeaderboardContract is AccessControl, Pausable, ReentrancyGuard {
      * @param gameManager Address that will manage game operations
      */
     constructor(address gameManager) {
+        require(gameManager != address(0), "Invalid game manager");
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(GAME_MANAGER_ROLE, gameManager);
     }
@@ -121,6 +122,7 @@ contract PokerLeaderboardContract is AccessControl, Pausable, ReentrancyGuard {
         whenNotPaused 
         nonReentrant 
     {
+        require(playerAddresses.length > 0, "Empty array");
         require(
             playerAddresses.length == pointsArray.length &&
             playerAddresses.length == gamesWonArray.length &&
