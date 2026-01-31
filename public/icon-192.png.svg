@@ -1,0 +1,39 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="192" height="192" rx="32" fill="#0052FF"/>
+  
+  <!-- Poker chip outer ring -->
+  <circle cx="96" cy="96" r="68" fill="white"/>
+  <circle cx="96" cy="96" r="60" fill="#0052FF"/>
+  
+  <!-- Chip segments -->
+  <path d="M 96 28 L 96 36" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 120 32 L 116 40" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 140 44 L 134 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 156 64 L 148 68" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 164 88 L 156 90" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 164 104 L 156 102" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 156 128 L 148 124" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 140 148 L 134 142" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 120 160 L 116 152" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 96 164 L 96 156" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 72 160 L 76 152" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 52 148 L 58 142" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 36 128 L 44 124" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 28 104 L 36 102" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 28 88 L 36 90" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 36 64 L 44 68" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 52 44 L 58 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 72 32 L 76 40" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Playing cards -->
+  <rect x="70" y="80" width="22" height="32" rx="2" fill="white"/>
+  <text x="81" y="98" font-family="Arial" font-size="12" font-weight="bold" fill="black" text-anchor="middle">A</text>
+  
+  <rect x="100" y="80" width="22" height="32" rx="2" fill="white"/>
+  <text x="111" y="98" font-family="Arial" font-size="12" font-weight="bold" fill="#FF0000" text-anchor="middle">K</text>
+  
+  <!-- AI indicator -->
+  <circle cx="96" cy="120" r="10" fill="white"/>
+  <text x="96" y="124" font-family="Arial" font-size="8" font-weight="bold" fill="#0052FF" text-anchor="middle">AI</text>
+</svg>

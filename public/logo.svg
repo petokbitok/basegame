@@ -1,0 +1,43 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="#0052FF"/>
+  
+  <!-- Poker chip outer ring -->
+  <circle cx="256" cy="256" r="180" fill="white"/>
+  <circle cx="256" cy="256" r="160" fill="#0052FF"/>
+  
+  <!-- Poker chip segments -->
+  <path d="M 256 76 L 256 96" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 316 86 L 310 104" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 370 116 L 358 130" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 410 166 L 394 174" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 436 226 L 416 230" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 436 286 L 416 282" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 410 346 L 394 338" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 370 396 L 358 382" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 316 426 L 310 408" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 256 436 L 256 416" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 196 426 L 202 408" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 142 396 L 154 382" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 102 346 L 118 338" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 76 286 L 96 282" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 76 226 L 96 230" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 102 166 L 118 174" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 142 116 L 154 130" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 196 86 L 202 104" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Playing cards -->
+  <!-- Card 1 (Ace of Spades) -->
+  <rect x="200" y="220" width="50" height="70" rx="4" fill="white"/>
+  <text x="225" y="250" font-family="Arial" font-size="24" font-weight="bold" fill="black" text-anchor="middle">A</text>
+  <path d="M 225 260 L 220 270 L 230 270 Z" fill="black"/>
+  
+  <!-- Card 2 (King of Hearts) -->
+  <rect x="262" y="220" width="50" height="70" rx="4" fill="white"/>
+  <text x="287" y="250" font-family="Arial" font-size="24" font-weight="bold" fill="#FF0000" text-anchor="middle">K</text>
+  <path d="M 287 260 C 287 265 282 268 282 268 C 282 268 287 271 287 276 C 287 276 292 271 292 268 C 292 268 287 265 287 260" fill="#FF0000"/>
+  
+  <!-- AI chip indicator -->
+  <circle cx="256" cy="320" r="20" fill="white"/>
+  <text x="256" y="328" font-family="Arial" font-size="16" font-weight="bold" fill="#0052FF" text-anchor="middle">AI</text>
+</svg>

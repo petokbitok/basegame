@@ -1,0 +1,81 @@
+{
+  "name": "poker-ai-game",
+  "version": "1.0.0",
+  "description": "Texas Hold'em poker game with AI opponents on Base blockchain",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:check": "tsc && vite build",
+    "type-check": "tsc --noEmit",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean"
+  },
+  "keywords": [
+    "poker",
+    "texas-holdem",
+    "ai",
+    "blockchain",
+    "base",
+    "base-chain",
+    "base-account",
+    "game",
+    "web3",
+    "ethereum",
+    "smart-contracts",
+    "leaderboard"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/poker-ai-game.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/poker-ai-game/issues"
+  },
+  "homepage": "https://github.com/yourusername/poker-ai-game#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "@base-org/account": "^2.5.1",
+    "@base-org/account-ui": "^1.0.1",
+    "@coinbase/onchainkit": "^1.1.2",
+    "@openzeppelin/contracts": "^5.0.1",
+    "@tanstack/react-query": "^5.90.20",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.10.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "viem": "^2.44.4",
+    "wagmi": "^2.19.5"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^20.10.6",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^1.6.1",
+    "autoprefixer": "^10.4.16",
+    "fast-check": "^3.15.0",
+    "jsdom": "^23.0.1",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "vitest": "^1.1.0"
+  }
+}
