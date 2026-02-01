@@ -5,3 +5,6 @@ export { PokerTable } from './PokerTable';
 export { PotDisplay } from './PotDisplay';
 export { GameStageIndicator } from './GameStageIndicator';
 export { BettingControls } from './BettingControls';
+export { WinnerModal } from './WinnerModal';
+export { Leaderboard } from './Leaderboard';
+export { GameControls } from './GameControls';

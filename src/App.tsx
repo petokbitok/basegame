@@ -4,7 +4,7 @@ import { Game } from './Game';
 import { UserProfile } from './ui/UserProfile';
 import { SaveProgressPrompt } from './ui/SaveProgressPrompt';
 import { SignInWithBase } from './ui/SignInWithBase';
-import { PokerTable } from './components/PokerTable';
+import { PokerTable, Leaderboard } from './components';
 import { config } from './config';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
   const { disconnect } = useDisconnect();
   const [game, setGame] = useState<Game | null>(null);
   const [showSavePrompt, setShowSavePrompt] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
 
@@ -32,12 +33,17 @@ function App() {
       
       // Initialize blockchain if contract address is configured
       if (config.contracts.leaderboard) {
-        // TODO: Get provider from wagmi
+        // Get provider from wagmi
+        // For now, we'll initialize without provider until we have proper wallet connection
         // await newGame.initializeBlockchain(
         //   config.contracts.leaderboard,
         //   provider,
-        //   config.paymaster.url
+        //   config.paymaster.enabled ? config.paymaster.url : undefined
         // );
+        console.log('Blockchain integration ready:', {
+          contract: config.contracts.leaderboard,
+          paymaster: config.paymaster.enabled ? 'enabled' : 'disabled',
+        });
       }
       
       // Don't start the game automatically - wait for user to click button
@@ -165,13 +171,25 @@ function App() {
             <h1 className="text-lg font-bold text-white">Poker AI</h1>
           </div>
           
-          {address && (
-            <UserProfile
-              auth={{ getAuthenticatedUser: () => ({ address }), signOut: handleDisconnect } as any}
-              user={{ address }}
-              onSignOut={handleDisconnect}
-            />
-          )}
+          <div className="flex items-center gap-3">
+            {game && game.getLeaderboardManager() && (
+              <button
+                onClick={() => setShowLeaderboard(true)}
+                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors flex items-center gap-2"
+              >
+                <span>🏆</span>
+                <span className="hidden sm:inline">Leaderboard</span>
+              </button>
+            )}
+            
+            {address && (
+              <UserProfile
+                auth={{ getAuthenticatedUser: () => ({ address }), signOut: handleDisconnect } as any}
+                user={{ address }}
+                onSignOut={handleDisconnect}
+              />
+            )}
+          </div>
         </div>
       </header>
 
@@ -212,6 +230,14 @@ function App() {
         <SaveProgressPrompt
           game={game}
           onClose={() => setShowSavePrompt(false)}
+        />
+      )}
+
+      {showLeaderboard && game && game.getLeaderboardManager() && (
+        <Leaderboard
+          leaderboardManager={game.getLeaderboardManager()!}
+          currentPlayerAddress={address}
+          onClose={() => setShowLeaderboard(false)}
         />
       )}
     </div>
