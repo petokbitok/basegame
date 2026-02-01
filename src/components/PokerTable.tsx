@@ -119,29 +119,25 @@ export function PokerTable({ game, onAction }: PokerTableProps) {
 
   // CSS Grid positioning classes for each position
   const positionClasses: Record<PlayerPositionType, string> = {
-    'bottom': 'absolute bottom-4 left-1/2 -translate-x-1/2',
-    'bottom-left': 'absolute bottom-1/4 left-4 md:left-8',
-    'top-left': 'absolute top-1/3 left-4 md:left-8',
-    'top': 'absolute top-4 left-1/2 -translate-x-1/2',
-    'top-right': 'absolute top-1/3 right-4 md:right-8',
-    'bottom-right': 'absolute bottom-1/4 right-4 md:right-8',
+    'bottom': 'absolute bottom-2 left-1/2 -translate-x-1/2',
+    'bottom-left': 'absolute bottom-[20%] left-2 md:left-4',
+    'top-left': 'absolute top-[25%] left-2 md:left-4',
+    'top': 'absolute top-2 left-1/2 -translate-x-1/2',
+    'top-right': 'absolute top-[25%] right-2 md:right-4',
+    'bottom-right': 'absolute bottom-[20%] right-2 md:right-4',
   };
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-4" data-testid="poker-table">
-      {/* Game Stage Indicator at top */}
-      <div className="flex justify-center mb-4">
-        <GameStageIndicator stage={gameState.currentStage} currentBet={currentBet} />
-      </div>
-
-      {/* Poker Table - Oval layout with CSS Grid */}
+    <div className="relative w-full max-w-5xl mx-auto px-2" data-testid="poker-table">
+      {/* Poker Table - Compact oval layout */}
       <div 
-        className="relative bg-poker-felt rounded-[50%] border-4 md:border-8 border-amber-900 shadow-2xl p-4 md:p-8 lg:p-16"
-        style={{ aspectRatio: '16/10', minHeight: '400px' }}
+        className="relative bg-poker-felt rounded-[50%] border-4 border-amber-900 shadow-2xl p-3 md:p-6"
+        style={{ aspectRatio: '16/9', height: 'clamp(400px, 60vh, 500px)' }}
         data-testid="table-felt"
       >
-        {/* Center area with Community Cards and Pot */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4">
+        {/* Center area with Community Cards, Pot, and Stage */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+          <GameStageIndicator stage={gameState.currentStage} currentBet={currentBet} />
           <CommunityCards cards={gameState.communityCards} stage={gameState.currentStage} />
           <PotDisplay pot={gameState.pot} />
         </div>
@@ -174,11 +170,11 @@ export function PokerTable({ game, onAction }: PokerTableProps) {
 
       {/* Betting Controls */}
       {isPlayerTurn && humanPlayer && (
-        <div className="mt-4 md:mt-8 bg-gray-900 rounded-xl p-4 md:p-6 shadow-xl">
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 justify-center items-center">
+        <div className="mt-3 bg-gray-900/95 rounded-xl p-3 shadow-xl">
+          <div className="flex flex-row flex-wrap gap-2 justify-center items-center">
             <button
               onClick={() => handleAction('fold')}
-              className="w-full sm:w-auto px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-all"
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition-all"
             >
               Fold
             </button>
@@ -186,37 +182,35 @@ export function PokerTable({ game, onAction }: PokerTableProps) {
             {callAmount === 0 ? (
               <button
                 onClick={() => handleAction('check')}
-                className="w-full sm:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-all"
               >
                 Check
               </button>
             ) : (
               <button
                 onClick={() => handleAction('call', callAmount)}
-                className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all"
               >
-                Call {formatChipAmount(callAmount)}
+                Call ${formatChipAmount(callAmount)}
               </button>
             )}
 
-            <div className="w-full sm:w-auto flex flex-col sm:flex-row items-center gap-3 md:gap-4">
-              <div className="w-full sm:w-48 flex flex-col gap-2">
-                <input
-                  type="range"
-                  min={currentBet + 20}
-                  max={humanPlayer.chipStack}
-                  step={20}
-                  value={betAmount || currentBet + 20}
-                  onChange={(e) => setBetAmount(parseInt(e.target.value))}
-                  className="w-full"
-                />
-                <div className="text-white text-sm text-center">
-                  {formatChipAmount(betAmount || currentBet + 20)}
-                </div>
-              </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="range"
+                min={currentBet + 20}
+                max={humanPlayer.chipStack}
+                step={20}
+                value={betAmount || currentBet + 20}
+                onChange={(e) => setBetAmount(parseInt(e.target.value))}
+                className="w-32"
+              />
+              <span className="text-white text-xs min-w-[60px]">
+                ${formatChipAmount(betAmount || currentBet + 20)}
+              </span>
               <button
                 onClick={() => handleAction(currentBet === 0 ? 'bet' : 'raise', betAmount || currentBet + 20)}
-                className="w-full sm:w-auto px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-xl transition-all"
+                className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-semibold rounded-lg transition-all"
               >
                 {currentBet === 0 ? 'Bet' : 'Raise'}
               </button>
@@ -227,10 +221,10 @@ export function PokerTable({ game, onAction }: PokerTableProps) {
 
       {/* Start Hand Button */}
       {gameState.currentStage === 'SHOWDOWN' && (
-        <div className="mt-4 md:mt-8 text-center">
+        <div className="mt-3 text-center">
           <button
             onClick={handleStartHand}
-            className="w-full sm:w-auto px-8 py-4 bg-base-blue hover:bg-base-blue-dark text-white text-xl font-bold rounded-xl transition-all transform hover:scale-105"
+            className="px-6 py-2 bg-base-blue hover:bg-base-blue-dark text-white text-lg font-bold rounded-lg transition-all transform hover:scale-105"
           >
             Start New Hand
           </button>

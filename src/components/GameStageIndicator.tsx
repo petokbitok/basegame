@@ -16,13 +16,13 @@ const STAGE_NAMES: Record<GameStage, string> = {
 
 export function GameStageIndicator({ stage, currentBet }: GameStageIndicatorProps) {
   return (
-    <div className="flex flex-col items-center gap-2 bg-poker-green-dark/80 px-6 py-3 rounded-xl border-2 border-blue-500/50 shadow-lg">
-      <div className="text-xl md:text-2xl font-bold text-white">
+    <div className="flex items-center gap-2 bg-poker-green-dark/80 px-3 py-1.5 rounded-lg border border-blue-500/50 shadow-md">
+      <div className="text-sm font-bold text-white">
         {STAGE_NAMES[stage]}
       </div>
       {currentBet > 0 && (
-        <div className="flex items-center gap-2 text-sm text-blue-300">
-          <span>Current Bet:</span>
+        <div className="flex items-center gap-1 text-xs text-blue-300">
+          <span>Bet:</span>
           <span className="font-semibold text-white">
             ${formatChipAmount(currentBet)}
           </span>

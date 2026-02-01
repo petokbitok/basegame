@@ -113,12 +113,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-poker-green to-poker-green-dark">
-      <header className="bg-black bg-opacity-30 backdrop-blur-sm border-b border-white border-opacity-10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/logo.svg" alt="Poker AI" className="w-10 h-10" />
-            <h1 className="text-2xl font-bold text-white">Poker AI</h1>
+    <div className="min-h-screen bg-gradient-to-br from-poker-green to-poker-green-dark flex flex-col">
+      <header className="bg-black/30 backdrop-blur-sm border-b border-white/10">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img src="/logo.svg" alt="Poker AI" className="w-8 h-8" />
+            <h1 className="text-lg font-bold text-white">Poker AI</h1>
           </div>
           
           {address && (
@@ -131,27 +131,27 @@ function App() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-2 py-4 flex items-center justify-center">
         {game && gameStarted ? (
           <PokerTable game={game} />
         ) : game && !gameStarted ? (
-          <div className="flex items-center justify-center min-h-[600px]">
+          <div className="flex items-center justify-center">
             <div className="text-center">
-              <div className="mb-8">
-                <div className="text-6xl mb-4">🎰</div>
-                <h2 className="text-4xl font-bold text-white mb-4">
+              <div className="mb-6">
+                <div className="text-5xl mb-3">🎰</div>
+                <h2 className="text-3xl font-bold text-white mb-3">
                   Ready to Play?
                 </h2>
-                <p className="text-xl text-white text-opacity-80 mb-2">
+                <p className="text-lg text-white/80 mb-1">
                   Texas Hold'em Poker
                 </p>
-                <p className="text-lg text-white text-opacity-60">
+                <p className="text-sm text-white/60">
                   5 AI opponents • Starting chips: 1,000 • Blinds: 10/20
                 </p>
               </div>
               <button
                 onClick={handleStartGame}
-                className="px-12 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-2xl font-bold rounded-2xl transition-all duration-200 transform hover:scale-105 shadow-2xl"
+                className="px-10 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-xl font-bold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-2xl"
               >
                 🎮 Join Table & Start Game
               </button>

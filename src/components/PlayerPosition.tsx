@@ -31,23 +31,23 @@ export function PlayerPosition({
   return (
     <div
       className={`
-        flex flex-col items-center gap-2 p-3 rounded-lg transition-all duration-200
-        ${isActive ? 'ring-4 ring-yellow-400 ring-opacity-75 shadow-lg' : ''}
+        flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-200
+        ${isActive ? 'ring-2 ring-yellow-400 shadow-lg' : ''}
         ${isFolded ? 'opacity-40 grayscale' : ''}
-        bg-gray-800 bg-opacity-80
+        bg-gray-800/90 backdrop-blur-sm
       `}
       data-testid="player-position"
       data-position={position}
       data-player-id={player.id}
     >
       {/* Player Name and Dealer Button */}
-      <div className="flex items-center gap-2">
-        <span className="text-white font-semibold text-sm md:text-base">
+      <div className="flex items-center gap-1">
+        <span className="text-white font-semibold text-xs">
           {player.name}
         </span>
         {isDealer && (
           <span
-            className="bg-yellow-500 text-black font-bold text-xs px-2 py-1 rounded-full"
+            className="bg-yellow-500 text-black font-bold text-[10px] px-1.5 py-0.5 rounded-full"
             data-testid="dealer-button"
           >
             D
@@ -56,12 +56,12 @@ export function PlayerPosition({
       </div>
 
       {/* Chip Stack */}
-      <div className="text-green-400 font-bold text-sm md:text-base">
+      <div className="text-green-400 font-bold text-xs">
         ${formatChipAmount(player.chipStack)}
       </div>
 
       {/* Hole Cards */}
-      <div className="flex gap-1">
+      <div className="flex gap-0.5">
         {player.holeCards.length > 0 ? (
           <>
             <Card card={player.holeCards[0]} faceDown={!isHuman} />
@@ -78,7 +78,7 @@ export function PlayerPosition({
       {/* Last Action Indicator */}
       {player.lastAction && (
         <div
-          className="text-xs md:text-sm text-gray-300 bg-gray-700 px-2 py-1 rounded"
+          className="text-[10px] text-gray-300 bg-gray-700/80 px-1.5 py-0.5 rounded"
           data-testid="action-indicator"
         >
           {ACTION_LABELS[player.lastAction.type]}
@@ -91,7 +91,7 @@ export function PlayerPosition({
       {/* All-In Badge */}
       {player.isAllIn && (
         <div
-          className="bg-red-600 text-white font-bold text-xs px-3 py-1 rounded-full animate-pulse"
+          className="bg-red-600 text-white font-bold text-[10px] px-2 py-0.5 rounded-full animate-pulse"
           data-testid="all-in-badge"
         >
           ALL-IN

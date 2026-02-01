@@ -19,7 +19,7 @@ export function CommunityCards({ cards, stage }: CommunityCardsProps) {
   });
 
   return (
-    <div className="flex gap-2 md:gap-3 justify-center items-center" data-testid="community-cards">
+    <div className="flex gap-1 justify-center items-center" data-testid="community-cards">
       {cardSlots.map((card, index) => (
         <Card
           key={index}

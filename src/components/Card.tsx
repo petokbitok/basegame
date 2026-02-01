@@ -23,7 +23,7 @@ const RANK_DISPLAY: Record<number, string> = {
 export function Card({ card, faceDown = false, animate = false, animationDelay = 0 }: CardProps) {
   if (!card) {
     return (
-      <div className="w-20 h-28 md:w-24 md:h-32 rounded-lg border-2 border-dashed border-gray-400 bg-transparent" />
+      <div className="w-12 h-16 md:w-14 md:h-20 rounded border border-dashed border-gray-400 bg-transparent" />
     );
   }
 
@@ -33,13 +33,13 @@ export function Card({ card, faceDown = false, animate = false, animationDelay =
   if (faceDown) {
     return (
       <div
-        className={`w-20 h-28 md:w-24 md:h-32 rounded-lg border-2 border-gray-300 bg-gradient-to-br from-blue-600 to-blue-800 shadow-lg ${
+        className={`w-12 h-16 md:w-14 md:h-20 rounded border border-gray-300 bg-gradient-to-br from-blue-600 to-blue-800 shadow-md ${
           animate ? 'animate-deal-card' : ''
         }`}
         style={{ animationDelay: `${animationDelay}ms` }}
       >
         <div className="w-full h-full flex items-center justify-center">
-          <div className="text-white text-4xl opacity-30">🃏</div>
+          <div className="text-white text-2xl opacity-30">🃏</div>
         </div>
       </div>
     );
@@ -47,16 +47,16 @@ export function Card({ card, faceDown = false, animate = false, animationDelay =
 
   return (
     <div
-      className={`w-20 h-28 md:w-24 md:h-32 rounded-lg border-2 border-gray-300 bg-white shadow-lg flex flex-col items-center justify-center ${color} ${
+      className={`w-12 h-16 md:w-14 md:h-20 rounded border border-gray-300 bg-white shadow-md flex flex-col items-center justify-center ${color} ${
         animate ? 'animate-deal-card' : ''
       }`}
       style={{ animationDelay: `${animationDelay}ms` }}
       data-testid="playing-card"
     >
-      <div className="text-3xl md:text-4xl font-bold">
+      <div className="text-lg md:text-xl font-bold">
         {RANK_DISPLAY[card.rank]}
       </div>
-      <div className="text-2xl md:text-3xl">
+      <div className="text-base md:text-lg">
         {SUIT_SYMBOLS[card.suit as keyof typeof SUIT_SYMBOLS]}
       </div>
     </div>
