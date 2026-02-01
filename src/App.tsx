@@ -4,7 +4,9 @@ import { Game } from './Game';
 import { UserProfile } from './ui/UserProfile';
 import { SaveProgressPrompt } from './ui/SaveProgressPrompt';
 import { SignInWithBase } from './ui/SignInWithBase';
+import { NotificationContainer } from './ui/Notification';
 import { PokerTable, Leaderboard } from './components';
+import { useNotifications } from './hooks/useNotifications';
 import { config } from './config';
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const { notifications, removeNotification, success, error, info } = useNotifications();
 
   // Initialize game when wallet connects
   useEffect(() => {
@@ -44,12 +47,15 @@ function App() {
           contract: config.contracts.leaderboard,
           paymaster: config.paymaster.enabled ? 'enabled' : 'disabled',
         });
+        info('Blockchain integration ready');
       }
       
       // Don't start the game automatically - wait for user to click button
       setGame(newGame);
-    } catch (error) {
-      console.error('Failed to initialize game:', error);
+      success('Game initialized successfully!');
+    } catch (err) {
+      console.error('Failed to initialize game:', err);
+      error('Failed to initialize game');
     } finally {
       setIsInitializing(false);
     }
@@ -59,6 +65,7 @@ function App() {
     console.log('Start Game button clicked');
     if (!game) {
       console.error('No game instance available');
+      error('No game instance available');
       return;
     }
     
@@ -66,9 +73,11 @@ function App() {
       console.log('Starting game...');
       await game.startGame();
       setGameStarted(true);
+      success('Game started! Good luck!');
       console.log('Game started successfully');
-    } catch (error) {
-      console.error('Failed to start game:', error);
+    } catch (err) {
+      console.error('Failed to start game:', err);
+      error('Failed to start game');
     }
   };
 
@@ -76,6 +85,7 @@ function App() {
     disconnect();
     setGame(null);
     setGameStarted(false);
+    info('Wallet disconnected');
   };
 
   if (!isConnected) {
@@ -111,10 +121,12 @@ function App() {
               <SignInWithBase 
                 onSuccess={(address) => {
                   console.log('Base Account connected:', address);
+                  success('Connected with Base Account!');
                   // The wagmi hook will detect the connection automatically
                 }}
-                onError={(error) => {
-                  console.error('Base Account error:', error);
+                onError={(err) => {
+                  console.error('Base Account error:', err);
+                  error('Failed to connect with Base Account');
                 }}
               />
               <p className="text-xs text-gray-500 mt-2">
@@ -135,7 +147,10 @@ function App() {
             {connectors.map((connector: Connector) => (
               <button
                 key={connector.id}
-                onClick={() => connect({ connector })}
+                onClick={() => {
+                  connect({ connector });
+                  info(`Connecting with ${connector.name}...`);
+                }}
                 className="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all duration-200"
               >
                 {connector.name}
@@ -240,6 +255,11 @@ function App() {
           onClose={() => setShowLeaderboard(false)}
         />
       )}
+
+      <NotificationContainer
+        notifications={notifications}
+        onRemove={removeNotification}
+      />
     </div>
   );
 }
