@@ -1,18 +1,18 @@
-export {
-  ContractService,
+export { ContractService } from './ContractService';
+export type {
   PlayerStats,
   LeaderboardEntry,
   ContractResult,
 } from './ContractService';
-export {
-  PaymasterService,
+export { PaymasterService } from './PaymasterService';
+export type {
   SponsoredTransaction,
   SpendingLimit,
   PaymasterResult,
   PaymasterConfig,
 } from './PaymasterService';
-export {
-  TransactionLogger,
+export { TransactionLogger } from './TransactionLogger';
+export type {
   TransactionLog,
   TransactionType,
   TransactionStatus,

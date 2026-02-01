@@ -1,1 +1,2 @@
-export { GamePersistence, SavedGameData } from './GamePersistence';
+export { GamePersistence } from './GamePersistence';
+export type { SavedGameData } from './GamePersistence';

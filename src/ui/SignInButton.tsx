@@ -52,7 +52,7 @@ export const SignInButton: React.FC<SignInButtonProps> = ({
       </button>
       {error && <div className="error-message">{error}</div>}
 
-      <style jsx>{`
+      <style>{`
         .sign-in-container {
           display: flex;
           flex-direction: column;

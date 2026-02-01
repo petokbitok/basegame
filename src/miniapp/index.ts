@@ -1,1 +1,2 @@
-export { MiniAppContext, AppContext } from './MiniAppContext';
+export { MiniAppContext } from './MiniAppContext';
+export type { AppContext } from './MiniAppContext';

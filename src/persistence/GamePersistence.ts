@@ -1,6 +1,4 @@
 import { GameState, PlayerStats } from '../types';
-import * as fs from 'fs';
-import * as path from 'path';
 
 /**
  * Saved game data structure
@@ -15,6 +13,7 @@ export interface SavedGameData {
 
 /**
  * Game persistence service for save/load operations
+ * Uses localStorage in browser environment
  */
 export class GamePersistence {
   private saveDirectory: string;
@@ -22,23 +21,10 @@ export class GamePersistence {
 
   constructor(saveDirectory: string = './saves') {
     this.saveDirectory = saveDirectory;
-    this.ensureSaveDirectory();
   }
 
   /**
-   * Ensure save directory exists
-   */
-  private ensureSaveDirectory(): void {
-    if (typeof window === 'undefined') {
-      // Node.js environment
-      if (!fs.existsSync(this.saveDirectory)) {
-        fs.mkdirSync(this.saveDirectory, { recursive: true });
-      }
-    }
-  }
-
-  /**
-   * Save game state to file
+   * Save game state
    * @param gameState Current game state
    * @param playerStats Player statistics
    * @param chipBalances Chip balances map
@@ -62,14 +48,8 @@ export class GamePersistence {
 
       const jsonData = JSON.stringify(saveData, null, 2);
 
-      if (typeof window === 'undefined') {
-        // Node.js - save to file
-        const filepath = path.join(this.saveDirectory, filename);
-        fs.writeFileSync(filepath, jsonData, 'utf-8');
-      } else {
-        // Browser - save to localStorage
-        localStorage.setItem(`poker_save_${filename}`, jsonData);
-      }
+      // Browser - save to localStorage
+      localStorage.setItem(`poker_save_${filename}`, jsonData);
 
       return true;
     } catch (error) {
@@ -79,31 +59,19 @@ export class GamePersistence {
   }
 
   /**
-   * Load game state from file
+   * Load game state
    * @param filename Save filename
    * @returns Promise<SavedGameData | null> Loaded data or null
    */
   async loadGame(filename: string = 'autosave.json'): Promise<SavedGameData | null> {
     try {
-      let jsonData: string;
-
-      if (typeof window === 'undefined') {
-        // Node.js - load from file
-        const filepath = path.join(this.saveDirectory, filename);
-        if (!fs.existsSync(filepath)) {
-          return null;
-        }
-        jsonData = fs.readFileSync(filepath, 'utf-8');
-      } else {
-        // Browser - load from localStorage
-        const data = localStorage.getItem(`poker_save_${filename}`);
-        if (!data) {
-          return null;
-        }
-        jsonData = data;
+      // Browser - load from localStorage
+      const data = localStorage.getItem(`poker_save_${filename}`);
+      if (!data) {
+        return null;
       }
 
-      const saveData: SavedGameData = JSON.parse(jsonData);
+      const saveData: SavedGameData = JSON.parse(data);
 
       // Validate version
       if (!this.isCompatibleVersion(saveData.version)) {
@@ -134,24 +102,15 @@ export class GamePersistence {
    */
   async listSaves(): Promise<string[]> {
     try {
-      if (typeof window === 'undefined') {
-        // Node.js
-        if (!fs.existsSync(this.saveDirectory)) {
-          return [];
+      // Browser
+      const saves: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key?.startsWith('poker_save_')) {
+          saves.push(key.replace('poker_save_', ''));
         }
-        const files = fs.readdirSync(this.saveDirectory);
-        return files.filter((f) => f.endsWith('.json'));
-      } else {
-        // Browser
-        const saves: string[] = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          const key = localStorage.key(i);
-          if (key?.startsWith('poker_save_')) {
-            saves.push(key.replace('poker_save_', ''));
-          }
-        }
-        return saves;
       }
+      return saves;
     } catch (error) {
       console.error('Failed to list saves:', error);
       return [];
@@ -165,16 +124,8 @@ export class GamePersistence {
    */
   async deleteSave(filename: string): Promise<boolean> {
     try {
-      if (typeof window === 'undefined') {
-        // Node.js
-        const filepath = path.join(this.saveDirectory, filename);
-        if (fs.existsSync(filepath)) {
-          fs.unlinkSync(filepath);
-        }
-      } else {
-        // Browser
-        localStorage.removeItem(`poker_save_${filename}`);
-      }
+      // Browser
+      localStorage.removeItem(`poker_save_${filename}`);
       return true;
     } catch (error) {
       console.error('Failed to delete save:', error);

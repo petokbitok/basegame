@@ -195,7 +195,7 @@ describe('BettingSystem Property Tests', () => {
           
           if (!validation.valid) {
             // Process the invalid action
-            const result = bettingSystem.processAction(player, action, player.currentBet + 10, pot);
+            const result = bettingSystem.processAction(player, action, [player], pot);
             
             // State should not change for invalid actions
             // (Note: processAction doesn't validate, so we check validation first)
@@ -273,6 +273,7 @@ describe('BettingSystem Property Tests', () => {
         activePlayerArb,
         fc.constantFrom(ActionType.CALL, ActionType.BET, ActionType.RAISE),
         (player, actionType) => {
+          const players = [player];
           const pot: PotState = {
             mainPot: 0,
             sidePots: [],
@@ -300,10 +301,10 @@ describe('BettingSystem Property Tests', () => {
             };
           }
 
-          const result = bettingSystem.processAction(player, action, currentBet, pot);
+          const result = bettingSystem.processAction(player, action, players, pot);
           
           if (result.success) {
-            expect(result.updatedPlayer.chipStack).toBeGreaterThanOrEqual(0);
+            expect(player.chipStack).toBeGreaterThanOrEqual(0);
           }
         }
       ),
@@ -320,6 +321,7 @@ describe('BettingSystem Property Tests', () => {
         activePlayerArb,
         fc.constantFrom(ActionType.CALL, ActionType.BET),
         (player, actionType) => {
+          const players = [player];
           const initialPot = 100;
           const pot: PotState = {
             mainPot: initialPot,
@@ -343,10 +345,10 @@ describe('BettingSystem Property Tests', () => {
             };
           }
 
-          const result = bettingSystem.processAction(player, action, currentBet, pot);
+          const result = bettingSystem.processAction(player, action, players, pot);
           
-          if (result.success) {
-            const finalTotal = result.updatedPlayer.chipStack + result.newPot.totalPot;
+          if (result.success && result.pot) {
+            const finalTotal = player.chipStack + result.pot.totalPot;
             expect(finalTotal).toBe(initialTotal);
           }
         }
@@ -364,6 +366,7 @@ describe('BettingSystem Property Tests', () => {
         activePlayerArb,
         (player) => {
           // Create action that uses all chips
+          const players = [player];
           const pot: PotState = {
             mainPot: 0,
             sidePots: [],
@@ -376,10 +379,10 @@ describe('BettingSystem Property Tests', () => {
             playerId: player.id
           };
 
-          const result = bettingSystem.processAction(player, action, 0, pot);
+          const result = bettingSystem.processAction(player, action, players, pot);
           
-          if (result.success && result.updatedPlayer.chipStack === 0) {
-            expect(result.updatedPlayer.isAllIn).toBe(true);
+          if (result.success && player.chipStack === 0) {
+            expect(player.isAllIn).toBe(true);
           }
         }
       ),

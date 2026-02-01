@@ -135,7 +135,7 @@ export const SaveProgressPrompt: React.FC<SaveProgressPromptProps> = ({ game, on
         </p>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .save-progress-prompt {
           position: fixed;
           top: 0;

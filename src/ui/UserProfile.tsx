@@ -40,7 +40,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({
         Sign Out
       </button>
 
-      <style jsx>{`
+      <style>{`
         .user-profile {
           display: flex;
           align-items: center;

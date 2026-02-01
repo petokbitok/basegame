@@ -274,41 +274,46 @@ describe('BettingSystem Unit Tests', () => {
   describe('Action processing', () => {
     test('should process fold action correctly', () => {
       const player = createPlayer();
+      const players = [player];
       const pot: PotState = { mainPot: 0, sidePots: [], totalPot: 0 };
       const action: PlayerAction = { type: ActionType.FOLD, playerId: player.id };
 
-      const result = bettingSystem.processAction(player, action, 0, pot);
+      const result = bettingSystem.processAction(player, action, players, pot);
 
       expect(result.success).toBe(true);
-      expect(result.updatedPlayer.isActive).toBe(false);
-      expect(result.updatedPlayer.lastAction).toEqual(action);
+      expect(player.isActive).toBe(false);
+      expect(player.lastAction).toEqual(action);
     });
 
     test('should process call action and update pot', () => {
       const player = createPlayer({ chipStack: 100, currentBet: 0 });
+      const otherPlayer = createPlayer({ id: 'player2', chipStack: 100, currentBet: 10 });
+      const players = [player, otherPlayer];
       const pot: PotState = { mainPot: 10, sidePots: [], totalPot: 10 };
       const action: PlayerAction = { type: ActionType.CALL, playerId: player.id };
 
-      const result = bettingSystem.processAction(player, action, 10, pot);
+      const result = bettingSystem.processAction(player, action, players, pot);
 
       expect(result.success).toBe(true);
-      expect(result.updatedPlayer.chipStack).toBe(90);
-      expect(result.updatedPlayer.currentBet).toBe(10);
-      expect(result.newPot.totalPot).toBe(20);
+      expect(player.chipStack).toBe(90);
+      expect(player.currentBet).toBe(10);
+      expect(result.pot?.totalPot).toBe(20);
     });
 
     test('should mark player all-in when calling with insufficient chips', () => {
       const player = createPlayer({ chipStack: 5, currentBet: 0 });
+      const otherPlayer = createPlayer({ id: 'player2', chipStack: 100, currentBet: 10 });
+      const players = [player, otherPlayer];
       const pot: PotState = { mainPot: 10, sidePots: [], totalPot: 10 };
       const action: PlayerAction = { type: ActionType.CALL, playerId: player.id };
 
-      const result = bettingSystem.processAction(player, action, 10, pot);
+      const result = bettingSystem.processAction(player, action, players, pot);
 
       expect(result.success).toBe(true);
-      expect(result.updatedPlayer.chipStack).toBe(0);
-      expect(result.updatedPlayer.currentBet).toBe(5);
-      expect(result.updatedPlayer.isAllIn).toBe(true);
-      expect(result.newPot.totalPot).toBe(15);
+      expect(player.chipStack).toBe(0);
+      expect(player.currentBet).toBe(5);
+      expect(player.isAllIn).toBe(true);
+      expect(result.pot?.totalPot).toBe(15);
     });
   });
 

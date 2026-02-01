@@ -338,6 +338,15 @@ export class GameEngine {
    * Advance to next game stage
    */
   advanceGameStage(): void {
+    // Check if only one player remains active (all others folded)
+    const activePlayers = this.gameState.players.filter((p) => p.isActive);
+    if (activePlayers.length === 1) {
+      // Award pot to the last remaining player
+      this.gameState.currentStage = GameStage.SHOWDOWN;
+      this.determineWinner();
+      return;
+    }
+
     // Reset current bets for next round
     this.gameState.players.forEach((p) => {
       p.currentBet = 0;
@@ -475,5 +484,13 @@ export class GameEngine {
    */
   getAllChipBalances(): Map<string, number> {
     return new Map(this.chipBalances);
+  }
+
+  /**
+   * Set dealer position
+   * @param position Dealer position index
+   */
+  setDealerPosition(position: number): void {
+    this.gameState.dealerPosition = position;
   }
 }

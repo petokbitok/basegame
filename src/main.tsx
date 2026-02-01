@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { OnchainKitProvider } from '@coinbase/onchainkit';
-import '@coinbase/onchainkit/styles.css';
 import './index.css';
 import App from './App';
 import { wagmiConfig } from './config/wagmi';
@@ -35,12 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <OnchainKitProvider
           apiKey={onchainKitConfig.apiKey}
           chain={onchainKitConfig.chain}
-          config={{
-            ...onchainKitConfig.config,
-            analytics: {
-              enabled: config.analytics.enabled,
-            },
-          }}
+          config={onchainKitConfig.config}
         >
           <App />
         </OnchainKitProvider>

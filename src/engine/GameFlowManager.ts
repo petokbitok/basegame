@@ -21,24 +21,26 @@ export class GameFlowManager {
   startNextHand(): void {
     const state = this.engine.getGameState();
 
-    // Rotate dealer position
-    let nextDealer = (state.dealerPosition + 1) % state.players.length;
+    // Rotate dealer position only if this is not the first hand
+    if (this.handCount > 0) {
+      let nextDealer = (state.dealerPosition + 1) % state.players.length;
 
-    // Find next active player for dealer
-    let attempts = 0;
-    while (
-      state.players[nextDealer].chipStack === 0 &&
-      attempts < state.players.length
-    ) {
-      nextDealer = (nextDealer + 1) % state.players.length;
-      attempts++;
+      // Find next active player for dealer
+      let attempts = 0;
+      while (
+        state.players[nextDealer].chipStack === 0 &&
+        attempts < state.players.length
+      ) {
+        nextDealer = (nextDealer + 1) % state.players.length;
+        attempts++;
+      }
+
+      // Update dealer position before starting new hand
+      this.engine.setDealerPosition(nextDealer);
+
+      // Update positions for all players
+      this.updatePlayerPositions(state.players, nextDealer);
     }
-
-    // Update dealer position in state
-    state.dealerPosition = nextDealer;
-
-    // Update positions for all players
-    this.updatePlayerPositions(state.players, nextDealer);
 
     // Start new hand
     this.engine.startNewHand();

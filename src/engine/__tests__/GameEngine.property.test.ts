@@ -239,6 +239,7 @@ describe('GameEngine Property Tests', () => {
             );
 
             // Total chips should remain constant (conservation of chips)
+            // Pot should be distributed, so we don't add it
             expect(totalChipsAfter).toBe(totalChipsBefore);
           }
         ),
@@ -330,7 +331,17 @@ describe('GameEngine Property Tests', () => {
             { minLength: 2, maxLength: 8 }
           ),
           (playerData) => {
-            const players: Player[] = playerData.map((pd, i) => ({
+            // Filter out duplicate IDs
+            const uniquePlayerData = playerData.filter((pd, index, self) =>
+              index === self.findIndex((p) => p.id === pd.id)
+            );
+            
+            // Skip if we don't have at least 2 unique players
+            if (uniquePlayerData.length < 2) {
+              return true;
+            }
+            
+            const players: Player[] = uniquePlayerData.map((pd, i) => ({
               id: pd.id,
               name: `Player ${i}`,
               chipStack: pd.chips,

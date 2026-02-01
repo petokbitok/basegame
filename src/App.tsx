@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useState, useEffect } from 'react';
+import { useAccount, useConnect, useDisconnect, type Connector } from 'wagmi';
 import { Game } from './Game';
-import { SignInButton } from './ui/SignInButton';
 import { UserProfile } from './ui/UserProfile';
 import { SaveProgressPrompt } from './ui/SaveProgressPrompt';
+import { PokerTable } from './components/PokerTable';
 import { config } from './config';
 
 function App() {
@@ -38,6 +38,9 @@ function App() {
         // );
       }
       
+      // Start the game automatically
+      await newGame.startGame();
+      
       setGame(newGame);
     } catch (error) {
       console.error('Failed to initialize game:', error);
@@ -68,7 +71,7 @@ function App() {
           </div>
 
           <div className="space-y-4">
-            {connectors.map((connector) => (
+            {connectors.map((connector: Connector) => (
               <button
                 key={connector.id}
                 onClick={() => connect({ connector })}
@@ -119,30 +122,7 @@ function App() {
 
       <main className="container mx-auto px-4 py-8">
         {game ? (
-          <div className="bg-poker-felt rounded-3xl shadow-2xl p-8 border-8 border-amber-900">
-            <div className="text-center text-white">
-              <h2 className="text-3xl font-bold mb-4">🃏 Texas Hold'em</h2>
-              <p className="text-xl mb-8">Game is ready! Implementation in progress...</p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-                <div className="bg-black bg-opacity-30 rounded-xl p-4">
-                  <div className="text-3xl mb-2">💰</div>
-                  <div className="text-sm opacity-75">Starting Chips</div>
-                  <div className="text-2xl font-bold">1,000</div>
-                </div>
-                <div className="bg-black bg-opacity-30 rounded-xl p-4">
-                  <div className="text-3xl mb-2">🤖</div>
-                  <div className="text-sm opacity-75">AI Opponents</div>
-                  <div className="text-2xl font-bold">5</div>
-                </div>
-                <div className="bg-black bg-opacity-30 rounded-xl p-4">
-                  <div className="text-3xl mb-2">🏆</div>
-                  <div className="text-sm opacity-75">Points</div>
-                  <div className="text-2xl font-bold">0</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <PokerTable game={game} />
         ) : (
           <div className="text-center text-white">
             <p className="text-xl">Loading game...</p>

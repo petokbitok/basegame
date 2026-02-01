@@ -45,6 +45,8 @@ if (config.isDevelopment) {
   console.log('🎮 Poker AI Game - Configuration:', getConfigSummary());
 }
 
+import { Game } from './Game';
+
 /**
  * Create and initialize a new poker game
  * @param gameConfig Game configuration
@@ -68,7 +70,7 @@ export async function createGame(gameConfig?: {
 
   // Initialize blockchain with config or provided values
   const contractAddress = gameConfig?.contractAddress || config.contracts.leaderboard;
-  const paymasterUrl = gameConfig?.paymasterUrl || config.paymaster.serviceUrl;
+  const paymasterUrl = gameConfig?.paymasterUrl || config.paymaster.url;
 
   if (contractAddress && gameConfig?.provider) {
     await game.initializeBlockchain(

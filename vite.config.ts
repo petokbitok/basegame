@@ -4,6 +4,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   
+  css: {
+    postcss: './postcss.config.js',
+  },
+  
   build: {
     minify: 'terser',
     terserOptions: {
@@ -46,5 +50,8 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
+    typecheck: {
+      enabled: false,
+    },
   },
 });

@@ -1,1 +1,2 @@
-export { LeaderboardManager, GameResult, SaveResult } from './LeaderboardManager';
+export { LeaderboardManager } from './LeaderboardManager';
+export type { GameResult, SaveResult } from './LeaderboardManager';

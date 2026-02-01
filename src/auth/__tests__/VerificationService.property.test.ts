@@ -65,9 +65,9 @@ describe('VerificationService Property Tests', () => {
       );
     });
 
-    it('should prevent nonce reuse', () => {
-      fc.assert(
-        fc.property(
+    it('should prevent nonce reuse', async () => {
+      await fc.assert(
+        fc.asyncProperty(
           fc.hexaString({ minLength: 40, maxLength: 42 }),
           fc.string({ minLength: 50, maxLength: 200 }),
           fc.hexaString({ minLength: 130, maxLength: 132 }),
@@ -105,9 +105,9 @@ describe('VerificationService Property Tests', () => {
       );
     });
 
-    it('should reject messages without valid nonce format', () => {
-      fc.assert(
-        fc.property(
+    it('should reject messages without valid nonce format', async () => {
+      await fc.assert(
+        fc.asyncProperty(
           fc.hexaString({ minLength: 40, maxLength: 42 }),
           fc.string({ minLength: 10, maxLength: 100 }),
           fc.hexaString({ minLength: 130, maxLength: 132 }),

@@ -154,6 +154,14 @@ export class Game {
   }
 
   /**
+   * Start a new hand
+   */
+  startNewHand(): void {
+    this.flowManager.startNextHand();
+    this.runGameLoop();
+  }
+
+  /**
    * Main game loop
    */
   private async runGameLoop(): Promise<void> {
@@ -167,6 +175,9 @@ export class Game {
         if (ai) {
           const action = ai.makeDecision(state, currentPlayer);
           this.engine.processPlayerAction(currentPlayer.id, action);
+          
+          // Small delay to allow UI updates and tests to observe state changes
+          await new Promise(resolve => setTimeout(resolve, 50));
         }
       } else {
         // Human player's turn - wait for input
