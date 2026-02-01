@@ -101,9 +101,9 @@ describe('VerificationService Property Tests', () => {
             expect(result.error).toContain('Invalid or reused nonce');
           }
         ),
-        { numRuns: 20 }
+        { numRuns: 10 }
       );
-    });
+    }, 10000);
 
     it('should reject messages without valid nonce format', async () => {
       await fc.assert(

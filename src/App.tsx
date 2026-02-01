@@ -13,6 +13,7 @@ function App() {
   const [game, setGame] = useState<Game | null>(null);
   const [showSavePrompt, setShowSavePrompt] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   // Initialize game when wallet connects
   useEffect(() => {
@@ -38,9 +39,7 @@ function App() {
         // );
       }
       
-      // Start the game automatically
-      await newGame.startGame();
-      
+      // Don't start the game automatically - wait for user to click button
       setGame(newGame);
     } catch (error) {
       console.error('Failed to initialize game:', error);
@@ -49,9 +48,21 @@ function App() {
     }
   };
 
+  const handleStartGame = async () => {
+    if (!game) return;
+    
+    try {
+      await game.startGame();
+      setGameStarted(true);
+    } catch (error) {
+      console.error('Failed to start game:', error);
+    }
+  };
+
   const handleDisconnect = () => {
     disconnect();
     setGame(null);
+    setGameStarted(false);
   };
 
   if (!isConnected) {
@@ -121,8 +132,31 @@ function App() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        {game ? (
+        {game && gameStarted ? (
           <PokerTable game={game} />
+        ) : game && !gameStarted ? (
+          <div className="flex items-center justify-center min-h-[600px]">
+            <div className="text-center">
+              <div className="mb-8">
+                <div className="text-6xl mb-4">🎰</div>
+                <h2 className="text-4xl font-bold text-white mb-4">
+                  Ready to Play?
+                </h2>
+                <p className="text-xl text-white text-opacity-80 mb-2">
+                  Texas Hold'em Poker
+                </p>
+                <p className="text-lg text-white text-opacity-60">
+                  5 AI opponents • Starting chips: 1,000 • Blinds: 10/20
+                </p>
+              </div>
+              <button
+                onClick={handleStartGame}
+                className="px-12 py-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-2xl font-bold rounded-2xl transition-all duration-200 transform hover:scale-105 shadow-2xl"
+              >
+                🎮 Join Table & Start Game
+              </button>
+            </div>
+          </div>
         ) : (
           <div className="text-center text-white">
             <p className="text-xl">Loading game...</p>
