@@ -69,7 +69,7 @@ describe('PlayerPosition Component', () => {
       );
 
       // Card component renders with specific classes
-      const cards = container.querySelectorAll('.w-20, .w-24');
+      const cards = container.querySelectorAll('.w-12, .w-14');
       expect(cards.length).toBeGreaterThanOrEqual(2);
     });
   });
@@ -121,7 +121,7 @@ describe('PlayerPosition Component', () => {
       );
 
       const container = screen.getByTestId('player-position');
-      expect(container.className).toContain('ring-4');
+      expect(container.className).toContain('ring-2');
       expect(container.className).toContain('ring-yellow-400');
     });
 

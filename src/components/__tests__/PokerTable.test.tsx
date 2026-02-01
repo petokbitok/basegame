@@ -124,7 +124,7 @@ describe('PokerTable Component', () => {
 
       const humanPosition = screen.getByTestId('player-position-0');
       expect(humanPosition.getAttribute('data-player-type')).toBe('human');
-      expect(humanPosition.className).toContain('bottom-4');
+      expect(humanPosition.className).toContain('bottom-2');
       expect(humanPosition.className).toContain('left-1/2');
     });
 
@@ -134,15 +134,15 @@ describe('PokerTable Component', () => {
       // Check that AI players are positioned correctly
       const ai1Position = screen.getByTestId('player-position-1');
       expect(ai1Position.getAttribute('data-player-type')).toBe('ai');
-      expect(ai1Position.className).toContain('bottom-1/4');
+      expect(ai1Position.className).toContain('bottom-[20%]');
 
       const ai2Position = screen.getByTestId('player-position-2');
       expect(ai2Position.getAttribute('data-player-type')).toBe('ai');
-      expect(ai2Position.className).toContain('top-1/3');
+      expect(ai2Position.className).toContain('top-[25%]');
 
       const ai3Position = screen.getByTestId('player-position-3');
       expect(ai3Position.getAttribute('data-player-type')).toBe('ai');
-      expect(ai3Position.className).toContain('top-4');
+      expect(ai3Position.className).toContain('top-2');
     });
   });
 
@@ -194,7 +194,7 @@ describe('PokerTable Component', () => {
       render(<PokerTable game={mockGame} />);
 
       const container = screen.getByTestId('poker-table');
-      expect(container.className).toContain('max-w-6xl');
+      expect(container.className).toContain('max-w-5xl');
       expect(container.className).toContain('mx-auto');
     });
 
@@ -211,9 +211,8 @@ describe('PokerTable Component', () => {
       render(<PokerTable game={mockGame} />);
 
       const tableFelt = screen.getByTestId('table-felt');
-      // Check for responsive border classes
+      // Check for border class (no responsive variant in new design)
       expect(tableFelt.className).toMatch(/border-\d+/);
-      expect(tableFelt.className).toMatch(/md:border-\d+/);
     });
   });
 
@@ -297,13 +296,12 @@ describe('PokerTable Component', () => {
       const { container } = render(<PokerTable game={mockGame} />);
 
       // Check for responsive flex classes on the inner flex container
-      const bettingControlsContainer = container.querySelector('.bg-gray-900');
-      expect(bettingControlsContainer).toBeInTheDocument();
+      const bettingControlsContainer = container.querySelector('.bg-gray-900\\/95');
+      expect(bettingControlsContainer).toBeTruthy();
       
-      // The inner div has the responsive flex classes
+      // The inner div has the flex-row class (no responsive variant in new compact design)
       const flexContainer = bettingControlsContainer?.querySelector('.flex');
-      expect(flexContainer?.className).toContain('flex-col');
-      expect(flexContainer?.className).toContain('sm:flex-row');
+      expect(flexContainer?.className).toContain('flex-row');
     });
   });
 });

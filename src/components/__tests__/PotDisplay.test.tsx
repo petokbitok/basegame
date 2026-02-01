@@ -111,8 +111,8 @@ describe('PotDisplay Component - Unit Tests', () => {
       const { container } = render(<PotDisplay pot={pot} />);
       
       const potDisplay = container.firstChild as HTMLElement;
-      expect(potDisplay.className).toContain('rounded-xl');
-      expect(potDisplay.className).toContain('shadow-lg');
+      expect(potDisplay.className).toContain('rounded-lg');
+      expect(potDisplay.className).toContain('shadow-md');
     });
   });
 

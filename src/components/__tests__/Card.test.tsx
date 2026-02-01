@@ -200,9 +200,9 @@ describe('Card Component - Unit Tests', () => {
       render(<Card card={card} />);
       
       const cardElement = screen.getByTestId('playing-card');
-      // Check for responsive width classes (w-20 for mobile, md:w-24 for desktop)
-      expect(cardElement.className).toContain('w-20');
-      expect(cardElement.className).toContain('md:w-24');
+      // Check for responsive width classes (w-12 for mobile, md:w-14 for desktop)
+      expect(cardElement.className).toContain('w-12');
+      expect(cardElement.className).toContain('md:w-14');
     });
 
     it('should have rounded corners', () => {
@@ -210,7 +210,7 @@ describe('Card Component - Unit Tests', () => {
       render(<Card card={card} />);
       
       const cardElement = screen.getByTestId('playing-card');
-      expect(cardElement.className).toContain('rounded-lg');
+      expect(cardElement.className).toContain('rounded');
     });
 
     it('should have shadow for depth', () => {
@@ -218,7 +218,7 @@ describe('Card Component - Unit Tests', () => {
       render(<Card card={card} />);
       
       const cardElement = screen.getByTestId('playing-card');
-      expect(cardElement.className).toContain('shadow-lg');
+      expect(cardElement.className).toContain('shadow-md');
     });
 
     it('should have white background for face-up cards', () => {

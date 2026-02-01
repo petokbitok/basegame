@@ -144,7 +144,7 @@ describe('Feature: poker-game-ui, Property 1: Card Visibility Rules', () => {
           );
 
           // AI player cards should be face-down (showing card back)
-          const cardElements = container.querySelectorAll('.w-20, .w-24');
+          const cardElements = container.querySelectorAll('.w-12, .w-14');
           
           // Should have 2 cards
           expect(cardElements.length).toBeGreaterThanOrEqual(2);

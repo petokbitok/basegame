@@ -197,7 +197,7 @@ describe('Feature: poker-game-ui, Property 4: Player State Indicators', () => {
 
         if (isActive) {
           // Active player should have highlight ring
-          expect(positionElement?.className).toContain('ring-4');
+          expect(positionElement?.className).toContain('ring-2');
           expect(positionElement?.className).toContain('ring-yellow-400');
         } else {
           // Inactive player should not have highlight ring
@@ -237,7 +237,7 @@ describe('Feature: poker-game-ui, Property 4: Player State Indicators', () => {
 
           // 2. Active highlighting is correct
           if (isActive) {
-            expect(containerElement?.className).toContain('ring-4');
+            expect(containerElement?.className).toContain('ring-2');
           }
 
           // 3. Folded styling is correct

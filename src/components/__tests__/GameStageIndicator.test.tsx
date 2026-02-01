@@ -50,7 +50,7 @@ describe('GameStageIndicator Component - Unit Tests', () => {
     it('should display current bet when bet is greater than 0', () => {
       render(<GameStageIndicator stage={GameStage.PRE_FLOP} currentBet={100} />);
       
-      expect(screen.getByText('Current Bet:')).toBeTruthy();
+      expect(screen.getByText('Bet:')).toBeTruthy();
       expect(screen.getByText('$100')).toBeTruthy();
     });
 
@@ -89,15 +89,15 @@ describe('GameStageIndicator Component - Unit Tests', () => {
       );
       
       const indicator = container.firstChild as HTMLElement;
-      expect(indicator.className).toContain('rounded-xl');
-      expect(indicator.className).toContain('shadow-lg');
+      expect(indicator.className).toContain('rounded-lg');
+      expect(indicator.className).toContain('shadow-md');
     });
 
     it('should display both stage and bet when bet exists', () => {
       render(<GameStageIndicator stage={GameStage.RIVER} currentBet={250} />);
       
       expect(screen.getByText('River')).toBeTruthy();
-      expect(screen.getByText('Current Bet:')).toBeTruthy();
+      expect(screen.getByText('Bet:')).toBeTruthy();
       expect(screen.getByText('$250')).toBeTruthy();
     });
   });
@@ -150,7 +150,7 @@ describe('GameStageIndicator Component - Unit Tests', () => {
         );
         
         // Should show bet display
-        expect(container.textContent).toContain('Current Bet:');
+        expect(container.textContent).toContain('Bet:');
         expect(container.textContent).toContain('$100');
       });
     });

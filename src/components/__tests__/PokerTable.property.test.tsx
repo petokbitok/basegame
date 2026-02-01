@@ -227,7 +227,7 @@ describe('Feature: poker-game-ui, Property 8: Game State Synchronization', () =>
         let highlightedCount = 0;
         positions.forEach((position, index) => {
           const playerPosition = position.querySelector('[data-testid="player-position"]');
-          if (playerPosition?.className.includes('ring-4') && 
+          if (playerPosition?.className.includes('ring-2') && 
               playerPosition?.className.includes('ring-yellow-400')) {
             highlightedCount++;
             // The highlighted position should match the active player index
