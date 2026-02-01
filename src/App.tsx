@@ -49,11 +49,17 @@ function App() {
   };
 
   const handleStartGame = async () => {
-    if (!game) return;
+    console.log('Start Game button clicked');
+    if (!game) {
+      console.error('No game instance available');
+      return;
+    }
     
     try {
+      console.log('Starting game...');
       await game.startGame();
       setGameStarted(true);
+      console.log('Game started successfully');
     } catch (error) {
       console.error('Failed to start game:', error);
     }

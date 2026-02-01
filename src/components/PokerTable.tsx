@@ -78,16 +78,29 @@ export function PokerTable({ game, onAction }: PokerTableProps) {
   }
 
   const handleStartHand = () => {
-    game.startNewHand();
+    console.log('Start New Hand button clicked');
+    try {
+      game.startNewHand();
+    } catch (error) {
+      console.error('Error starting new hand:', error);
+    }
   };
 
   const handleAction = async (action: string, amount?: number) => {
-    if (!isPlayerTurn) return;
+    console.log('Action button clicked:', action, amount);
+    if (!isPlayerTurn) {
+      console.log('Not player turn, ignoring action');
+      return;
+    }
     
     const humanPlayer = gameState.players.find(p => p.isHuman);
-    if (!humanPlayer) return;
+    if (!humanPlayer) {
+      console.log('No human player found');
+      return;
+    }
 
     try {
+      console.log('Processing action:', action, amount);
       // Process action through game engine
       await game.processHumanAction(action as any, amount);
       
@@ -95,6 +108,7 @@ export function PokerTable({ game, onAction }: PokerTableProps) {
       if (onAction) {
         onAction(action as ActionType, amount);
       }
+      console.log('Action processed successfully');
     } catch (error) {
       console.error('Failed to process action:', error);
       // Error will be handled by error boundary
