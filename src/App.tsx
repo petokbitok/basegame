@@ -3,6 +3,7 @@ import { useAccount, useConnect, useDisconnect, type Connector } from 'wagmi';
 import { Game } from './Game';
 import { UserProfile } from './ui/UserProfile';
 import { SaveProgressPrompt } from './ui/SaveProgressPrompt';
+import { SignInWithBase } from './ui/SignInWithBase';
 import { PokerTable } from './components/PokerTable';
 import { config } from './config';
 
@@ -82,19 +83,56 @@ function App() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               🎮 Poker AI Game
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
               Play Texas Hold'em with AI opponents on Base
+            </p>
+            <p className="text-sm text-gray-500">
+              Powered by Base Account • Gasless transactions
             </p>
           </div>
 
           <div className="space-y-4">
+            {/* Base Account Sign In - Recommended */}
+            <div className="border-2 border-base-blue rounded-xl p-4 bg-blue-50">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="bg-base-blue text-white text-xs font-bold px-2 py-1 rounded">
+                  RECOMMENDED
+                </span>
+                <span className="text-sm font-semibold text-gray-700">
+                  Sign in with Base Account
+                </span>
+              </div>
+              <SignInWithBase 
+                onSuccess={(address) => {
+                  console.log('Base Account connected:', address);
+                  // The wagmi hook will detect the connection automatically
+                }}
+                onError={(error) => {
+                  console.error('Base Account error:', error);
+                }}
+              />
+              <p className="text-xs text-gray-500 mt-2">
+                ✓ No gas fees • ✓ Instant setup • ✓ Secure smart wallet
+              </p>
+            </div>
+
+            {/* Alternative wallet options */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">Or connect with</span>
+              </div>
+            </div>
+
             {connectors.map((connector: Connector) => (
               <button
                 key={connector.id}
                 onClick={() => connect({ connector })}
-                className="w-full py-3 px-4 bg-base-blue hover:bg-base-blue-dark text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105"
+                className="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all duration-200"
               >
-                Connect with {connector.name}
+                {connector.name}
               </button>
             ))}
           </div>
